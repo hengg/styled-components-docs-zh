@@ -1,4 +1,20 @@
 # 基础
+
+## 动机
+
+**styled-components是我们对于如何增强 React 组件中 CSS 表现这个问题的思考结果**
+通过聚焦于单个用例,我们设法优化了开发者的体验和面向终端用户的输出.
+
+除了提升开发者体验外, styled-components 同时提供:
+
+- **Automatic critical CSS:** styled-components keeps track of which components are rendered on a page and injects their styles and nothing else, fully automatically. Combined with code splitting, this means your users load the least amount of code necessary.
+- **解决了 class name 冲突:** styled-components 为样式生成唯一的 class name. 开发者不必再担心 class name 重复,覆盖和拼写错误的问题.
+- **Easier deletion of CSS:** it can be hard to know whether a class name is used somewhere in your codebase. styled-components makes it obvious, as every bit of styling is tied to a specific component. If the component is unused (which tooling can detect) and gets deleted, all its styles get deleted with it.
+- **Simple dynamic styling:** adapting the styling of a component based on its props or a global theme is simple and intuitive without having to manually manage dozens of classes.
+- **Painless maintenance:** you never have to hunt across different files to find the styling affecting your component, so maintenance is a piece of cake no matter how big your codebase is.
+- **Automatic vendor prefixing:** write your CSS to the current standard and let styled-components handle the rest.
+
+通过 styled-components 绑定样式到组件,开发者可以在编写熟知的 CSS 同时也获得上述全部的益处.
 ## 安装
 从 npm 安装 styled-components :
 ```
