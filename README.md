@@ -17,35 +17,13 @@
 
 通过 styled-components 绑定样式到组件,开发者可以在编写熟知的 CSS 同时也获得上述全部的益处.
 ## 安装
-从 npm 安装 styled-components :
+从 npm 安装 styled-components 只需要一个命令:
 ```
 npm install --save styled-components
 ```
->注意
->
->想试用新的 styled-components v4 beta? 现在可以通过如下方式安装:
->```
->npm install --save styled-components@beta
->```
 
-强烈推荐使用 styled-components babel 插件(当然这不是必须的).它提供了许多益处,比如更清晰的类名,SSR 兼容性,更小的包等等.
+>强烈推荐使用 styled-components 的 [babel 插件](https://www.styled-components.com/docs/tooling#babel-plugin) (当然这不是必须的).它提供了许多益处,比如更清晰的类名,SSR 兼容性,更小的包等等.
 
-```
-npm install --save-dev babel-plugin-styled-components
-```
-
-然后确保插件 babel-plugin-styled-components 添加到`.babelrc`中:
-```json
-{
-  "presets": ["@babel/preset-env", "@babel/preset-react"],
-  "plugins": ["babel-plugin-styled-components"]
-}
-```
-
-> 注意
->
->如果你的项目中还没有安装 babel,请参考 **[安装说明](https://babeljs.io/en/setup)**
-## 其他安装方式
 如果你没有使用模块管理工具或者包管理工具,也可以使用官方托管在 unpkg CDN 上的构建版本.只需在HTML文件底部添加以下`<script>`标签:
 ```html
 <script src="https://unpkg.com/styled-components/dist/styled-components.min.js"></script>
@@ -59,3 +37,100 @@ const Component = window.styled.div`
 >注意
 >
 >这用使用方式需要页面在 styled-components script 之前引入 [react CDN bundles](https://reactjs.org/docs/cdn-links.html) 
+
+## 入门
+
+`styled-components` 通过标记的模板字符来设置组件样式.
+
+它移除了组件和样式之间的映射.当我们通过`styled-components`定义样式时,我们实际上是创建了一个附加了样式的常规 React 组件.
+
+以下的例子创建了两个简单的附加了样式的组件, 一个`Wrapper`和一个`Title`:
+
+```jsx
+// 创建一个 Title 组件,它将渲染一个附加了样式的 <h1> 标签
+const Title = styled.h1`
+  font-size: 1.5em;
+  text-align: center;
+  color: palevioletred;
+`;
+
+// 创建一个 Wrapper 组件,它将渲染一个附加了样式的 <section> 标签
+const Wrapper = styled.section`
+  padding: 4em;
+  background: papayawhip;
+`;
+
+// 就像使用常规 React 组件一样使用 Title 和 Wrapper 
+render(
+  <Wrapper>
+    <Title>
+      Hello World!
+    </Title>
+  </Wrapper>
+);
+```
+
+>注意
+>
+> styled-components 会为我们自动创建 CSS 前缀
+
+## 基于 props 的适配
+我们可以将 props 以插值的方式传递给`styled component`,以调整组件样式.
+
+下面这个 `Button` 组件持有一个可以改变`color`的`primary`属性. 将其设置为 ture 时,组件的`background-color`和`color`会交换.
+
+```jsx
+const Button = styled.button`
+  /* Adapt the colors based on primary prop */
+  background: ${props => props.primary ? "palevioletred" : "white"};
+  color: ${props => props.primary ? "white" : "palevioletred"};
+
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid palevioletred;
+  border-radius: 3px;
+`;
+
+render(
+  <div>
+    <Button>Normal</Button>
+    <Button primary>Primary</Button>
+  </div>
+);
+```
+
+## 样式继承
+可能我们希望某个经常使用的组件,在特定场景下可以稍微更改其样式.当然我们可以通过 props 传递插值的方式来实现,但是对于某个只需要重载一次的样式来说这样做的成本还是有点高.
+
+创建一个继承其它组件样式的新组件,最简单的方式就是用构造函数`styled()`包裹被继承的组件.下面的示例就是通过继承上一节创建的按钮从而实现一些颜色相关样式的扩展:
+
+```jsx
+// 上一节创建的没有插值的 Button 组件
+const Button = styled.button`
+  color: palevioletred;
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid palevioletred;
+  border-radius: 3px;
+`;
+
+// 一个继承 Button 的新组件, 重载了一部分样式
+const TomatoButton = styled(Button)`
+  color: tomato;
+  border-color: tomato;
+`;
+
+render(
+  <div>
+    <Button>Normal Button</Button>
+    <TomatoButton>Tomato Button</TomatoButton>
+  </div>
+);
+```
+
+We can see that the new TomatoButton still resembles Button, while we have only added two new rules.
+
+In some cases you might want to change which tag or component a styled component renders. This is common when building a navigation bar for example, where there are a mix of anchor links and buttons but they should be styled identically.
+
