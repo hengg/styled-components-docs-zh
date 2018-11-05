@@ -130,7 +130,116 @@ render(
 );
 ```
 
-We can see that the new TomatoButton still resembles Button, while we have only added two new rules.
+可以看到,新的`TomatoButton`仍然和`Button`类似,我们只是添加了两条规则.
 
-In some cases you might want to change which tag or component a styled component renders. This is common when building a navigation bar for example, where there are a mix of anchor links and buttons but they should be styled identically.
+In some cases you might want to change which tag or component a styled component renders.这在构建导航栏时很常见，例如导航栏中同时存在链接和按钮,但是它们的样式应该相同.
 
+在这种情况下,我们也有替代办法(escape hatch). 我们可以使用多态 ["as" polymorphic prop](https://www.styled-components.com/docs/api#as-polymorphic-prop) 动态的在不改变样式的情况下改变元素:
+
+```jsx
+const Button = styled.button`
+  display: inline-block;
+  color: palevioletred;
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid palevioletred;
+  border-radius: 3px;
+`;
+
+const TomatoButton = styled(Button)`
+  color: tomato;
+  border-color: tomato;
+`;
+
+render(
+  <div>
+    <Button>Normal Button</Button>
+    <Button as="a" href="/">Link with Button styles</Button>
+    <TomatoButton as="a" href="/">Link with Tomato Button styles</TomatoButton>
+  </div>
+);
+```
+
+这也完美适用于自定义组件:
+```jsx
+const Button = styled.button`
+  display: inline-block;
+  color: palevioletred;
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid palevioletred;
+  border-radius: 3px;
+`;
+
+const ReversedButton = props => <button {...props} children={props.children.split('').reverse()} />
+
+render(
+  <div>
+    <Button>Normal Button</Button>
+    <Button as={ReversedButton}>Custom Button with Normal Button styles</Button>
+  </div>
+);
+```
+
+## 给任何组件添加样式(Styling any components)
+`styled`方法适用于任何最终向 DOM 元素传递 `className` 属性的组件,当然也包括第三方组件.
+> 注意
+>
+>在 react-native 中，请使用 style 而不是 className.
+
+```jsx
+// 下面是给 react-router-dom  Link 组件添加样式的示例
+const Link = ({ className, children }) => (
+  <a className={className}>
+    {children}
+  </a>
+);
+
+const StyledLink = styled(Link)`
+  color: palevioletred;
+  font-weight: bold;
+`;
+
+render(
+  <div>
+    <Link>Unstyled, boring Link</Link>
+    <br />
+    <StyledLink>Styled, exciting Link</StyledLink>
+  </div>
+);
+```
+
+>注意
+>
+>也可以传递标签给`styled()`, 比如:` styled("div")`. 实际上`styled.tagname`的方式就是 styled(tagname)`的别名.
+
+## 传递 props
+如果添加样式的目标是 DOM 元素 (如`styled.div`), `styled-components `会传递已知的 HTML 属性给 DOM. 如果是一个自定义的 React 组件 (如`styled(MyComponent)`), `styled-components` 会传递全部 `props`.
+
+以下示例展示如何传递 Input 组件的 props 到已装载的 DOM 节点, as with React elements.
+
+```jsx
+// 创建一个给<input>标签添加若干样式的 Input 组件 
+const Input = styled.input`
+  padding: 0.5em;
+  margin: 0.5em;
+  color: ${props => props.inputColor || "palevioletred"};
+  background: papayawhip;
+  border: none;
+  border-radius: 3px;
+`;
+
+// 渲染两个样式化的 text input,一个标准颜色,一个自定义颜色
+render(
+  <div>
+    <Input defaultValue="@probablyup" type="text" />
+    <Input defaultValue="@geelen" type="text" inputColor="rebeccapurple" />
+  </div>
+);
+```
+
+注意, `inputColor prop`并没有传递给 DOM, 但是`type`和`defaultValue` 都传递了. `styled-components`足够智能,会自动过滤掉所有非标准 attribute.
+
+## Coming from CSS
