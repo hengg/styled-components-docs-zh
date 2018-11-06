@@ -377,7 +377,7 @@ render(
 )
 ```
 
-For more complex selector patterns, the ampersand (&) can be used to refer back to the main component. Here are some more examples of its potential usage:
+对于更复杂的选择器,可以使用与号(&)来指向主组件.以下是一些示例:
 
 ```jsx
 const Thing = styled.div.attrs({ tabIndex: 0 })`
@@ -418,7 +418,7 @@ render(
 )
 ```
 
-If you put selectors in without the ampersand, they will refer to children of the component.
+如果只写选择器而不带&,则指向组件的子节点.
 
 ```jsx
 const Thing = styled.div`
@@ -437,8 +437,7 @@ render(
   </Thing>
 )
 ```
-
-Finally, the ampersand can be used to increase the specificity of rules on the component; this can be useful if you are dealing with a mixed styled-components and vanilla CSS environment where there might be conflicting styles:
+最后,&可以用于增加组件的差异性;在处理混用 styled-components 和纯 CSS 导致的样式冲突时这将会非常有用:
 
 ```jsx
 const Thing = styled.div`
@@ -462,3 +461,5 @@ render(
   </React.Fragment>
 )
 ```
+
+## Attaching additional props (v2)
