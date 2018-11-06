@@ -19,8 +19,8 @@
 
 ## 动机
 
-**styled-components 是我们对于如何增强 React 组件中 CSS 表现这个问题的思考结果**
-通过聚焦于单个用例,我们设法优化了开发者的体验和面向终端用户的输出.
+**styled-components 是作者对于如何增强 React 组件中 CSS 表现这个问题的思考结果**
+通过聚焦于单个用例,设法优化了开发者的体验和面向终端用户的输出.
 
 除了提升开发者体验外, styled-components 同时提供以下特性:
 
@@ -260,3 +260,205 @@ render(
 注意, `inputColor prop`并没有传递给 DOM, 但是`type`和`defaultValue` 都传递了. `styled-components`足够智能,会自动过滤掉所有非标准 attribute.
 
 ## Coming from CSS
+
+### styled-components 如何在组件中工作?
+如果你熟悉在组件中导入 CSS(例如 CSSModules),那么下面的写法你一定不陌生:
+```jsx
+import React from 'react'
+import styles from './styles.css'
+
+export default class Counter extends React.Component {
+  state = { count: 0 }
+
+  increment = () => this.setState({ count: this.state.count + 1 })
+  decrement = () => this.setState({ count: this.state.count - 1 })
+
+  render() {
+    return (
+      <div className={styles.counter}>
+        <p className={styles.paragraph}>{this.state.count}</p>
+        <button className={styles.button} onClick={this.increment}>
+          +
+        </button>
+        <button className={styles.button} onClick={this.decrement}>
+          -
+        </button>
+      </div>
+    )
+  }
+}
+```
+由于 Styled Component 是 HTML 元素和作用在元素上的样式规则的组合, 我们可以这样编写`Counter`:
+```jsx
+import React from 'react'
+import styled from 'styled-components'
+
+const StyledCounter = styled.div`
+  /* ... */
+`
+const Paragraph = styled.p`
+  /* ... */
+`
+const Button = styled.button`
+  /* ... */
+`
+
+export default class Counter extends React.Component {
+  state = { count: 0 }
+
+  increment = () => this.setState({ count: this.state.count + 1 })
+  decrement = () => this.setState({ count: this.state.count - 1 })
+
+  render() {
+    return (
+      <StyledCounter>
+        <Paragraph>{this.state.count}</Paragraph>
+        <Button onClick={this.increment}>+</Button>
+        <Button onClick={this.decrement}>-</Button>
+      </StyledCounter>
+    )
+  }
+}
+```
+
+注意,我们在`StyledCounter`添加了"Styled"前缀,这样组件`Counter` 和`StyledCounter` 不会明明冲突,而且可以在 React Developer Tools 和 Web Inspector 中轻松识别.
+
+### 在 render 方法之外定义 Styled Components 
+
+在 render 方法之外定义 styled component 很重要, 不然 styled component 会在每个渲染过程中重新创建. 这将阻止缓存生效并且大大降低了渲染速度,所以尽量避免这种情况.
+
+推荐通过以下方式创建 styled components :
+```jsx
+const StyledWrapper = styled.div`
+  /* ... */
+`
+
+const Wrapper = ({ message }) => {
+  return <StyledWrapper>{message}</StyledWrapper>
+}
+```
+而不是:
+```jsx
+const Wrapper = ({ message }) => {
+  // WARNING: 别这么干,会很慢!!!
+  const StyledWrapper = styled.div`
+    /* ... */
+  `
+
+  return <StyledWrapper>{message}</StyledWrapper>
+}
+```
+
+**推荐阅读**:[Talia Marcassa](https://twitter.com/talialongname) 写了一篇很精彩的有关styled-components实际应用的文章,包含许多实用的见解以及与其它方案的比较[Styled Components: To Use or Not to Use?](https://medium.com/building-crowdriff/styled-components-to-use-or-not-to-use-a6bb4a7ffc21)
+
+### 伪元素,伪类选择器和嵌套
+`styled-component` 所使用的预处理器[stylis](https://github.com/thysultan/stylis.js)支持自动嵌套的 scss-like 语法,示例如下:
+```jsx
+const Thing = styled.div`
+  color: blue;
+`
+```
+伪元素和伪类无需进一步细化,而是自动附加到了组件:
+```jsx
+const Thing = styled.button`
+  color: blue;
+
+  ::before {
+    content: '🚀';
+  }
+
+  :hover {
+    color: red;
+  }
+`
+
+render(
+  <Thing>Hello world!</Thing>
+)
+```
+
+For more complex selector patterns, the ampersand (&) can be used to refer back to the main component. Here are some more examples of its potential usage:
+
+```jsx
+const Thing = styled.div.attrs({ tabIndex: 0 })`
+  color: blue;
+
+  &:hover {
+    color: red; // <Thing> when hovered
+  }
+
+  & ~ & {
+    background: tomato; // <Thing> as a sibling of <Thing>, but maybe not directly next to it
+  }
+
+  & + & {
+    background: lime; // <Thing> next to <Thing>
+  }
+
+  &.something {
+    background: orange; // <Thing> tagged with an additional CSS class ".something"
+  }
+
+  .something-else & {
+    border: 1px solid; // <Thing> inside another element labeled ".something-else"
+  }
+`
+
+render(
+  <React.Fragment>
+    <Thing>Hello world!</Thing>
+    <Thing>How ya doing?</Thing>
+    <Thing className="something">The sun is shining...</Thing>
+    <div>Pretty nice day today.</div>
+    <Thing>Don't you think?</Thing>
+    <div className="something-else">
+      <Thing>Splendid.</Thing>
+    </div>
+  </React.Fragment>
+)
+```
+
+If you put selectors in without the ampersand, they will refer to children of the component.
+
+```jsx
+const Thing = styled.div`
+  color: blue;
+
+  .something {
+    border: 1px solid; // an element labeled ".something" inside <Thing>
+    display: block;
+  }
+`
+
+render(
+  <Thing>
+    <label htmlFor="foo-button" className="something">Mystery button</label>
+    <button id="foo-button">What do I do?</button>
+  </Thing>
+)
+```
+
+Finally, the ampersand can be used to increase the specificity of rules on the component; this can be useful if you are dealing with a mixed styled-components and vanilla CSS environment where there might be conflicting styles:
+
+```jsx
+const Thing = styled.div`
+  && {
+    color: blue;
+  }
+`
+
+const GlobalStyle = createGlobalStyle`
+  div${Thing} {
+    color: red;
+  }
+`
+
+render(
+  <React.Fragment>
+    <GlobalStyle />
+    <Thing>
+      I'm blue, da ba dee da ba daa
+    </Thing>
+  </React.Fragment>
+)
+```
