@@ -4,15 +4,15 @@
 
 > This is not the official styled-components docs. I've been working on translating the official styled-components docs in Chinese. 
 
-**官网地址：**[https://www.styled-components.com](https://www.styled-components.com)
+**官网地址:**[https://www.styled-components.com](https://www.styled-components.com)
 
-**官方文档：**[https://www.styled-components.com/docs](https://www.styled-components.com/docs)
+**官方文档:**[https://www.styled-components.com/docs](https://www.styled-components.com/docs)
 
-**github**[https://github.com/styled-components/styled-components](https://github.com/styled-components/styled-components)
+**github地址:**[https://github.com/styled-components/styled-components](https://github.com/styled-components/styled-components)
 
 
 
-能力所限,已翻译部分可能仍有字词错误或语句不通顺的地方，欢迎有能力的同学帮助纠正。
+能力所限,已翻译部分可能仍有字词错误或语句不通顺的地方,欢迎有能力的同学帮助纠正.
 
 
 # 基础
