@@ -29,7 +29,7 @@ npm install --save styled-components
 
 >强烈推荐使用 styled-components 的 [babel 插件](https://www.styled-components.com/docs/tooling#babel-plugin) (当然这不是必须的).它提供了许多益处,比如更清晰的类名,SSR 兼容性,更小的包等等.
 
-如果没有使用模块管理工具或者包管理工具,也可以使用官方托管在 unpkg CDN 上的构建版本.只需在HTML文件底部添加以下`<script>`标签:
+如果没有使用模块管理工具或者包管理工具,也可以使用官方托管在 unpkg CDN 上的构建版本.只需在HTML文件底部添加以下`<script>`标签:
 ```html
 <script src="https://unpkg.com/styled-components/dist/styled-components.min.js"></script>
 ```
@@ -80,7 +80,7 @@ render(
 > styled-components 会为我们自动创建 CSS 前缀
 
 ## 基于 props 的适配
-我们可以将 props 以插值的方式传递给`styled component`,以调整组件样式.
+我们可以将 props 以插值的方式传递给`styled component`,以调整组件样式.
 
 下面这个 `Button` 组件持有一个可以改变`color`的`primary`属性. 将其设置为 ture 时,组件的`background-color`和`color`会交换.
 
