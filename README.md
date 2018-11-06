@@ -1,3 +1,8 @@
+styled-components 💅 中文文档,持续施工中
+
+[github](https://github.com/styled-components/styled-components)
+
+[原文档地址](https://www.styled-components.com/docs)
 # 基础
 
 ## 动机
@@ -17,14 +22,14 @@
 
 通过 styled-components 绑定样式到组件,开发者可以在编写熟知的 CSS 同时也获得上述全部的益处.
 ## 安装
-从 npm 安装 styled-components 只需要一个命令:
+从 npm 安装 styled-components :
 ```
 npm install --save styled-components
 ```
 
 >强烈推荐使用 styled-components 的 [babel 插件](https://www.styled-components.com/docs/tooling#babel-plugin) (当然这不是必须的).它提供了许多益处,比如更清晰的类名,SSR 兼容性,更小的包等等.
 
-如果你没有使用模块管理工具或者包管理工具,也可以使用官方托管在 unpkg CDN 上的构建版本.只需在HTML文件底部添加以下`<script>`标签:
+如果没有使用模块管理工具或者包管理工具,也可以使用官方托管在 unpkg CDN 上的构建版本.只需在HTML文件底部添加以下`<script>`标签:
 ```html
 <script src="https://unpkg.com/styled-components/dist/styled-components.min.js"></script>
 ```
