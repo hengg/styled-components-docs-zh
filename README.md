@@ -7,20 +7,20 @@ styled-components 💅 中文文档,持续施工中
 
 ## 动机
 
-**styled-components是我们对于如何增强 React 组件中 CSS 表现这个问题的思考结果**
+**styled-components 是我们对于如何增强 React 组件中 CSS 表现这个问题的思考结果**
 通过聚焦于单个用例,我们设法优化了开发者的体验和面向终端用户的输出.
 
 除了提升开发者体验外, styled-components 同时提供以下特性:
 
 - **Automatic critical CSS:** styled-components 持续跟踪页面上渲染的组件,并向自动其注入且仅注入样式. 结合使用代码拆分, 可以实现仅加载所需的最少代码.
 - **解决了 class name 冲突:** styled-components 为样式生成唯一的 class name. 开发者不必再担心 class name 重复,覆盖和拼写错误的问题.
-- **CSS 更容易移除:** 想要确切的知道代码中某个 class 在哪儿用到是很困难的. 使用 styled-components 则很轻松, 因为每个样式都有其关联的组件. 如果检测到某个组件未使用并且被删除,则其所有的样式也都被删除.
-- **简单的动态样式:** 可以很简单直观的实现根据组件的 props 或者全局主题适配样式,无需手动管理数十个 classes.
+- **CSS 更容易移除:** 想要确切的知道代码中某个 class 在哪儿用到是很困难的. 使用 styled-components 则很轻松, 因为每个样式都有其关联的组件. 如果检测到某个组件未使用并且被删除,则其所有的样式也都被删除.
+- **简单的动态样式:** 可以很简单直观的实现根据组件的 props 或者全局主题适配样式,无需手动管理数十个 classes.
 - **无痛维护:** 
 无需搜索不同的文件来查找影响组件的样式.无论代码多庞大，维护起来都是小菜一碟。
 - **自动提供前缀:** 按照当前标准写 CSS,其余的交给 styled-components handle 处理.
 
-通过 styled-components 绑定样式到组件,开发者可以在编写熟知的 CSS 同时也获得上述全部的益处.
+通过 styled-components 绑定样式到组件,开发者可以在编写熟知的 CSS 同时也获得上述全部的益处.
 ## 安装
 从 npm 安装 styled-components :
 ```
@@ -45,7 +45,7 @@ const Component = window.styled.div`
 
 ## 入门
 
-`styled-components` 通过标记的模板字符来设置组件样式.
+`styled-components` 通过标记的模板字符来设置组件样式.
 
 它移除了组件和样式之间的映射.当我们通过`styled-components`定义样式时,我们实际上是创建了一个附加了样式的常规 React 组件.
 
@@ -106,9 +106,9 @@ render(
 ```
 
 ## 样式继承
-可能我们希望某个经常使用的组件,在特定场景下可以稍微更改其样式.当然我们可以通过 props 传递插值的方式来实现,但是对于某个只需要重载一次的样式来说这样做的成本还是有点高.
+可能我们希望某个经常使用的组件,在特定场景下可以稍微更改其样式.当然我们可以通过 props 传递插值的方式来实现,但是对于某个只需要重载一次的样式来说这样做的成本还是有点高.
 
-创建一个继承其它组件样式的新组件,最简单的方式就是用构造函数`styled()`包裹被继承的组件.下面的示例就是通过继承上一节创建的按钮从而实现一些颜色相关样式的扩展:
+创建一个继承其它组件样式的新组件,最简单的方式就是用构造函数`styled()`包裹被继承的组件.下面的示例就是通过继承上一节创建的按钮从而实现一些颜色相关样式的扩展:
 
 ```jsx
 // 上一节创建的没有插值的 Button 组件
@@ -137,7 +137,7 @@ render(
 
 可以看到,新的`TomatoButton`仍然和`Button`类似,我们只是添加了两条规则.
 
-In some cases you might want to change which tag or component a styled component renders.这在构建导航栏时很常见，例如导航栏中同时存在链接和按钮,但是它们的样式应该相同.
+In some cases you might want to change which tag or component a styled component renders.这在构建导航栏时很常见，例如导航栏中同时存在链接和按钮,但是它们的样式应该相同.
 
 在这种情况下,我们也有替代办法(escape hatch). 我们可以使用多态 ["as" polymorphic prop](https://www.styled-components.com/docs/api#as-polymorphic-prop) 动态的在不改变样式的情况下改变元素:
 
@@ -223,7 +223,7 @@ render(
 ## 传递 props
 如果添加样式的目标是 DOM 元素 (如`styled.div`), `styled-components `会传递已知的 HTML 属性给 DOM. 如果是一个自定义的 React 组件 (如`styled(MyComponent)`), `styled-components` 会传递全部 `props`.
 
-以下示例展示如何传递 Input 组件的 props 到已装载的 DOM 节点, as with React elements.
+以下示例展示如何传递 Input 组件的 props 到已装载的 DOM 节点, as with React elements.
 
 ```jsx
 // 创建一个给<input>标签添加若干样式的 Input 组件 
@@ -245,6 +245,6 @@ render(
 );
 ```
 
-注意, `inputColor prop`并没有传递给 DOM, 但是`type`和`defaultValue` 都传递了. `styled-components`足够智能,会自动过滤掉所有非标准 attribute.
+注意, `inputColor prop`并没有传递给 DOM, 但是`type`和`defaultValue` 都传递了. `styled-components`足够智能,会自动过滤掉所有非标准 attribute.
 
 ## Coming from CSS
