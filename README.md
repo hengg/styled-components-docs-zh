@@ -1,8 +1,20 @@
-styled-components 💅 中文文档,持续施工中
+# styled-components 💅 中文文档翻译
 
-[github](https://github.com/styled-components/styled-components)
+## Notice
 
-[原文档地址](https://www.styled-components.com/docs)
+> This is not the official styled-components docs. I've been working on translating the official styled-components docs in Chinese. 
+
+**官网地址：**[https://www.styled-components.com](https://www.styled-components.com)
+
+**官方文档：**[https://www.styled-components.com/docs](https://www.styled-components.com/docs)
+
+**github**[https://github.com/styled-components/styled-components](https://github.com/styled-components/styled-components)
+
+
+
+能力所限,已翻译部分可能仍有字词错误或语句不通顺的地方，欢迎有能力的同学帮助纠正。
+
+
 # 基础
 
 ## 动机
