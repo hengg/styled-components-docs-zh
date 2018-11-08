@@ -544,4 +544,48 @@ const styles = css`
 >This used to work in v3 and below where we didn't code-split keyframes. If you're upgrading from v3, make sure that all your shared style fragments are using the css helper!
 
 ## React Native
-`styled-components` can be used with React Native in the same way and with the same import. Try this example with Snack by Expo.
+`styled-components` 可以在 React-Native 中以同样的方式使用. 示例:[ Snack by Expo](https://snack.expo.io/@danielmschmidt/styled-components).
+```jsx
+import React from 'react'
+import styled from 'styled-components/native'
+
+const StyledView = styled.View`
+  background-color: papayawhip;
+`
+
+const StyledText = styled.Text`
+  color: palevioletred;
+`
+
+class MyReactNativeComponent extends React.Component {
+  render() {
+    return (
+      <StyledView>
+        <StyledText>Hello World!</StyledText>
+      </StyledView>
+    )
+  }
+}
+```
+
+同时也支持复杂样式 (like `transform`)和简写(如 `margin`) 感谢 [css-to-react-native](https://github.com/styled-components/css-to-react-native) !
+>注意
+>
+>`flex`的工作方式类似于 CSS 简写, 而不是 React Native 中的`flex`用法. 设置 `flex: 1` 则会设置 `flexShrink`为1.
+
+Imagine how you'd write the property in React Native, guess how you'd transfer it to CSS, and you're probably right:
+
+```jsx
+const RotatedBox = styled.View`
+  transform: rotate(90deg);
+  text-shadow-offset: 10px 5px;
+  font-variant: small-caps;
+  margin: 5px 7px 2px;
+`
+```
+
+与 web-version 不同, React Native 不支持 `keyframes` 和 `createGlobalStyle` .使用媒体查询或是嵌套 CSS 也会报警.
+
+>NOTE
+>
+>v2 支持百分比. 为了实现这一目标,需要为所有简写强制指定单位. 如果要迁移到v2, [a codemod is available](https://github.com/styled-components/styled-components-native-code-mod).
