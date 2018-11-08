@@ -497,3 +497,51 @@ render(
 ```
 
 正如所见,我们可以在插值中访问新创建的 props,type attribute也正确的传递给了元素.
+
+## 动画
+虽然使用`@keyframes`的CSS动画不限于单个组件,但我们仍希望它们不是全局的(以避免明明冲突). 这就是为什么 styled-components 导出 `keyframes helper` 的原因: 它将生成一个可以在APP应用的唯一实例:
+```jsx
+// Create the keyframes
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+// Here we create a component that will rotate everything we pass in over two seconds
+const Rotate = styled.div`
+  display: inline-block;
+  animation: ${rotate} 2s linear infinite;
+  padding: 2rem 1rem;
+  font-size: 1.2rem;
+`;
+```
+>注意
+>
+>`react-native`不支持 keyframes. 请参考[ReactNative.Animated API](https://stackoverflow.com/questions/50891046/rotate-an-svg-in-react-native/50891225#50891225).
+
+Keyframes are lazily injected when they're used, which is how they can be code-splitted, so you have to use the [`css helper` ](https://www.styled-components.com/docs/api#css)for shared style fragments:
+
+```jsx
+const rotate = keyframes``
+
+// ❌ This will throw an error!
+const styles = `
+  animation: ${rotate} 2s linear infinite;
+`;
+
+// ✅ This will work as intended
+const styles = css`
+  animation: ${rotate} 2s linear infinite;
+`
+```
+>NOTE
+>
+>This used to work in v3 and below where we didn't code-split keyframes. If you're upgrading from v3, make sure that all your shared style fragments are using the css helper!
+
+## React Native
+`styled-components` can be used with React Native in the same way and with the same import. Try this example with Snack by Expo.
