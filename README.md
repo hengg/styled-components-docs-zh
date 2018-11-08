@@ -462,4 +462,38 @@ render(
 )
 ```
 
-## Attaching additional props (v2)
+## 附加额外的属性 (v2)
+为了避免仅为传递一些props来渲染组件或元素而使用不必要的wrapper, 可以使用 [`.attrs` constructor](https://www.styled-components.com/docs/api#attrs). 通过它可以添加额外的 props 或 attributes 到组件.
+
+举例来说,可以通过这种方式给元素添加静态 props,或者传递第三方 prop 给组件(比如传递`activeClassName`给 React Router 的 `Link`). 此外也可以将dynamic props 添加到组件. `.attrs` 对象也接收函数,返回值也将合并进 props.
+
+示例如下:
+```jsx
+const Input = styled.input.attrs({
+  //  static props
+  type: "password",
+
+  //  dynamic props
+  margin: props => props.size || "1em",
+  padding: props => props.size || "1em"
+})`
+  color: palevioletred;
+  font-size: 1em;
+  border: 2px solid palevioletred;
+  border-radius: 3px;
+
+  /* dynamically computed props */
+  margin: ${props => props.margin};
+  padding: ${props => props.padding};
+`;
+
+render(
+  <div>
+    <Input placeholder="A small text input" size="1em" />
+    <br />
+    <Input placeholder="A bigger text input" size="2em" />
+  </div>
+);
+```
+
+正如所见,我们可以在插值中访问新创建的 props,type attribute也正确的传递给了元素.
