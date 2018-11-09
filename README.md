@@ -725,3 +725,41 @@ render(
   </div>
 );
 ```
+
+## Refs
+通过传递`ref prop`给 styled component 将获得:
+- 底层 DOM 节点 (如果 styled 的对象是基本元素如 div)
+- React 组件实例 (如果 styled 的对象是 React Component)
+```jsx
+const Input = styled.input`
+  padding: 0.5em;
+  margin: 0.5em;
+  color: palevioletred;
+  background: papayawhip;
+  border: none;
+  border-radius: 3px;
+`;
+
+class Form extends React.Component {
+  constructor(props) {
+    super(props);
+    this.inputRef = React.createRef();
+  }
+
+  render() {
+    return (
+      <Input
+        ref={this.inputRef}
+        placeholder="Hover to focus!"
+        onMouseEnter={() => {
+          this.inputRef.current.focus()
+        }}
+      />
+    );
+  }
+}
+
+render(
+  <Form />
+);
+```
