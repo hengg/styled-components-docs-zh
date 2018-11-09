@@ -592,3 +592,136 @@ const RotatedBox = styled.View`
 
 ### Simpler usage with the metro bundler
 If you'd prefer to just import `styled-components` instead of `styled-components/native`, you can add a [resolverMainFields configuration](https://facebook.github.io/metro/docs/en/configuration.html#resolver-options) that includes "`react-native`". This used to be supported in metro by default (and currently does work in haul) but appears to have been removed at some point.
+
+# 高级
+
+## 主题
+`styled-component`提供`<ThemeProvider>`包装组件以支持主题.`<ThemeProvider>`通过`context`API 为其后代组件提供主题.在其渲染树中的所有组件都能够访问主题.
+
+下面的示例通过创建一个按钮组件来说明如何传递主题:
+```jsx
+// Define our button, but with the use of props.theme this time
+const Button = styled.button`
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border-radius: 3px;
+
+  /* Color the border and text with theme.main */
+  color: ${props => props.theme.main};
+  border: 2px solid ${props => props.theme.main};
+`;
+
+// We are passing a default theme for Buttons that arent wrapped in the ThemeProvider
+Button.defaultProps = {
+  theme: {
+    main: "palevioletred"
+  }
+}
+
+// Define what props.theme will look like
+const theme = {
+  main: "mediumseagreen"
+};
+
+render(
+  <div>
+    <Button>Normal</Button>
+    <ThemeProvider theme={theme}>
+      <Button>Themed</Button>
+    </ThemeProvider>
+  </div>
+);
+```
+
+### 函数主题
+theme prop 也可以传递一个函数.该函数接收渲染树上级`<ThemeProvider>`所传递的主题. 通过这种方式可以使 themes 形成上下文.
+
+下面的示例说明了如何通过第二个`<ThemeProvider>`来交换 `background`和`foreground`的颜色. 函数`invertTheme` 接收上级 theme 后创建一个新的 theme.
+
+```jsx
+// Define our button, but with the use of props.theme this time
+const Button = styled.button`
+  color: ${props => props.theme.fg};
+  border: 2px solid ${props => props.theme.fg};
+  background: ${props => props.theme.bg};
+
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border-radius: 3px;
+`;
+
+// Define our `fg` and `bg` on the theme
+const theme = {
+  fg: "palevioletred",
+  bg: "white"
+};
+
+// This theme swaps `fg` and `bg`
+const invertTheme = ({ fg, bg }) => ({
+  fg: bg,
+  bg: fg
+});
+
+render(
+  <ThemeProvider theme={theme}>
+    <div>
+      <Button>Default Theme</Button>
+
+      <ThemeProvider theme={invertTheme}>
+        <Button>Inverted Theme</Button>
+      </ThemeProvider>
+    </div>
+  </ThemeProvider>
+);
+```
+
+### 在`styled-components`外使用主题
+如果需要在`styled-components`外使用主题,可以使用高阶组件`withTheme`:
+```jsx
+import { withTheme } from 'styled-components'
+
+class MyComponent extends React.Component {
+  render() {
+    console.log('Current theme: ', this.props.theme)
+    // ...
+  }
+}
+
+export default withTheme(MyComponent)
+```
+
+### theme prop
+主题可以通过`theme prop`传递给组件.通过使用`theme prop`可以绕过或重写`ThemeProvider`所提供的主题.
+
+```jsx
+// Define our button
+const Button = styled.button`
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border-radius: 3px;
+
+  /* Color the border and text with theme.main */
+  color: ${props => props.theme.main};
+  border: 2px solid ${props => props.theme.main};
+`;
+
+// Define what main theme will look like
+const theme = {
+  main: "mediumseagreen"
+};
+
+render(
+  <div>
+    <Button theme={{ main: "royalblue" }}>Ad hoc theme</Button>
+    <ThemeProvider theme={theme}>
+      <div>
+        <Button>Themed</Button>
+        <Button theme={{ main: "darkorange" }}>Overidden</Button>
+      </div>
+    </ThemeProvider>
+  </div>
+);
+```
