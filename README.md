@@ -377,7 +377,7 @@ render(
 )
 ```
 
-对于更复杂的选择器,可以使用与号(&)来指向主组件.以下是一些示例:
+对于更复杂的选择器,可以使用与号(&)来指向主组件.以下是一些示例:
 
 ```jsx
 const Thing = styled.div.attrs({ tabIndex: 0 })`
@@ -437,7 +437,7 @@ render(
   </Thing>
 )
 ```
-最后,&可以用于增加组件的差异性;在处理混用 styled-components 和纯 CSS 导致的样式冲突时这将会非常有用:
+最后,&可以用于增加组件的差异性;在处理混用 styled-components 和纯 CSS 导致的样式冲突时这将会非常有用:
 
 ```jsx
 const Thing = styled.div`
@@ -463,7 +463,7 @@ render(
 ```
 
 ## 附加额外的属性 (v2)
-为了避免仅为传递一些props来渲染组件或元素而使用不必要的wrapper, 可以使用 [`.attrs` constructor](https://www.styled-components.com/docs/api#attrs). 通过它可以添加额外的 props 或 attributes 到组件.
+为了避免仅为传递一些props来渲染组件或元素而使用不必要的wrapper, 可以使用 [`.attrs` constructor](https://www.styled-components.com/docs/api#attrs). 通过它可以添加额外的 props 或 attributes 到组件.
 
 举例来说,可以通过这种方式给元素添加静态 props,或者传递第三方 prop 给组件(比如传递`activeClassName`给 React Router 的 `Link`). 此外也可以将dynamic props 添加到组件. `.attrs` 对象也接收函数,返回值也将合并进 props.
 
@@ -499,7 +499,7 @@ render(
 正如所见,我们可以在插值中访问新创建的 props,type attribute也正确的传递给了元素.
 
 ## 动画
-虽然使用`@keyframes`的CSS动画不限于单个组件,但我们仍希望它们不是全局的(以避免明明冲突). 这就是为什么 styled-components 导出 `keyframes helper` 的原因: 它将生成一个可以在APP应用的唯一实例:
+虽然使用`@keyframes`的 CSS 动画不限于单个组件,但我们仍希望它们不是全局的(以避免冲突). 这就是为什么 styled-components 导出 `keyframes helper` 的原因: 它将生成一个可以在 APP 应用的唯一实例:
 ```jsx
 // Create the keyframes
 const rotate = keyframes`
@@ -544,7 +544,7 @@ const styles = css`
 >This used to work in v3 and below where we didn't code-split keyframes. If you're upgrading from v3, make sure that all your shared style fragments are using the css helper!
 
 ## React Native
-`styled-components` 可以在 React-Native 中以同样的方式使用. 示例:[ Snack by Expo](https://snack.expo.io/@danielmschmidt/styled-components).
+`styled-components` 可以在 React-Native 中以同样的方式使用. 示例:[ Snack by Expo](https://snack.expo.io/@danielmschmidt/styled-components).
 ```jsx
 import React from 'react'
 import styled from 'styled-components/native'
@@ -588,7 +588,7 @@ const RotatedBox = styled.View`
 
 >NOTE
 >
->v2 支持百分比. 为了实现这一目标,需要为所有简写强制指定单位. 如果要迁移到v2, [a codemod is available](https://github.com/styled-components/styled-components-native-code-mod).
+>v2 支持百分比. 为了实现这一目标,需要为所有简写强制指定单位. 如果要迁移到v2, [a codemod is available](https://github.com/styled-components/styled-components-native-code-mod).
 
 ### Simpler usage with the metro bundler
 If you'd prefer to just import `styled-components` instead of `styled-components/native`, you can add a [resolverMainFields configuration](https://facebook.github.io/metro/docs/en/configuration.html#resolver-options) that includes "`react-native`". This used to be supported in metro by default (and currently does work in haul) but appears to have been removed at some point.
@@ -635,7 +635,7 @@ render(
 ```
 
 ### 函数主题
-theme prop 也可以传递一个函数.该函数接收渲染树上级`<ThemeProvider>`所传递的主题. 通过这种方式可以使 themes 形成上下文.
+theme prop 也可以传递一个函数.该函数接收渲染树上级`<ThemeProvider>`所传递的主题. 通过这种方式可以使 themes 形成上下文.
 
 下面的示例说明了如何通过第二个`<ThemeProvider>`来交换 `background`和`foreground`的颜色. 函数`invertTheme` 接收上级 theme 后创建一个新的 theme.
 
