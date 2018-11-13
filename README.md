@@ -834,3 +834,22 @@ const MyComponent = styled.div`background-color: green;`;
   background-color: red;
 }
 ```
+
+### 避免与第三方样式和脚本的冲突
+如果在一个不能完全控制的页面上部署`styled-components`,可能需要采取措施确保 component styles 不与 host page 上其他样式冲突.
+
+常见的问题是优先级相同,例如 host page 上持有如下样式:
+```jsx
+body.my-body button {
+  padding: 24px;
+}
+```
+因为其包含一个类名和两个标签名,它的优先级要高于 styled component 生成的一个类名的选择器:
+```jsx
+styled.button`
+  padding: 16px;
+`
+```
+没有让 styled component 完全不受 host page 样式影响的办法.但是可以通过[`babel-plugin-styled-components-css-namespace`](https://github.com/QuickBase/babel-plugin-styled-components-css-namespace)来提高样式的优先级, 通过它可以为 styled components 的类指定一个命名空间. 一个好的命名空间,譬如`#my-widget`,可以实现styled-components 在 一个 `id="my-widget"`的容器中渲染, 因为 id 选择器的优先级总是高于类选择器.
+
+一个罕见的问题是同一页面上两个`styled-components`实例的冲突.通过在 code bundle 中定义 `process.env.SC_ATTR` 可以避免这个问题. 它将覆盖 `<style> `标签的`data-styled`属性,  (v3 及以下版本使用 `data-styled-components`), allowing each styled-components instance to recognize its own tags.
