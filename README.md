@@ -800,12 +800,37 @@ class MyComponent extends React.Component {
   }
 }
 ```
-If you have pre-existing styles with a class, you can combine the global class with the passed-in one:
+对于已存在类名的组件,可以将其余传入的类合并:
 ```jsx
 class MyComponent extends React.Component {
   render() {
     // Attach the passed-in className to the DOM node
     return <div className={`some-global-class ${this.props.className}`} />
   }
+}
+```
+
+### Issues with specificity
+将`styled-components`类与全局类混用,可能会导致出乎意料的结果.如果一个`property`在两个类中被定义且两个类的优先级相同,则后者会覆盖前者.
+```jsx
+// MyComponent.js
+const MyComponent = styled.div`background-color: green;`;
+
+// my-component.css
+.red-bg {
+  background-color: red;
+}
+
+// For some reason this component still has a green background,
+// even though you're trying to override it with the "red-bg" class!
+<MyComponent className="red-bg" />
+```
+上述例子中`styled-components`类的样式覆盖了全局类,因为`styled-components`在运行时向`<head>`末尾注入样式.
+
+一种解决方式是提高全局样式的优先级:
+```jsx
+/* my-component.css */
+.red-bg.red-bg {
+  background-color: red;
 }
 ```
