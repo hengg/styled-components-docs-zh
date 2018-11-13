@@ -784,3 +784,28 @@ const ArbitraryComponent = styled.div`
 请一定谨慎处理!这虽然是一个明显的例子,但是CSS注入可能隐式的发生并且产生不良影响.有些旧版本的 IE 甚至会在 url 声明中执行 JavaScript.
 
 There is an upcoming standard to sanitize CSS from JavaScript有一个即将推出的标准,可以用于无害化 JavaScript 中的 CSS, [`CSS.escape`](https://developer.mozilla.org/en-US/docs/Web/API/CSS/escape). 这个标准还没有被浏览器很好的支持,因此建议使用 [`polyfill by Mathias Bynens`](https://github.com/mathiasbynens/CSS.escape) .
+
+## Existing CSS
+如果想将 styled-components 和现有的 CSS 共同使用,有很多实现的细节必须注意到.
+
+styled-components 通过类生成实际的样式表,并通过`className prop`将这些类附加到响应的 DOM 节点. 运行时它会被注入到 document 的 head 末尾.
+
+### Styling normal React components
+使用`styled(MyComponent)` 声明,  `MyComponent` 却不接收传入的 `className` prop, 则样式并不会被呈现. 为避免这个问题,请确保组件接收 `className` 并传递给 DOM 节点:
+```jsx
+class MyComponent extends React.Component {
+  render() {
+    // Attach the passed-in className to the DOM node
+    return <div className={this.props.className} />
+  }
+}
+```
+If you have pre-existing styles with a class, you can combine the global class with the passed-in one:
+```jsx
+class MyComponent extends React.Component {
+  render() {
+    // Attach the passed-in className to the DOM node
+    return <div className={`some-global-class ${this.props.className}`} />
+  }
+}
+```
