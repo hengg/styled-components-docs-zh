@@ -768,9 +768,9 @@ render(
 >v3 或更低的版本请使用 [innerRef prop](https://www.styled-components.com/docs/api#innerref-prop) instead.
 
 ## 安全性
-Since styled-components allows you to use arbitrary input as interpolations, you must be careful to sanitize that input. Using user input as styles can lead to any CSS being evaluated in the user's browser that an attacker can place in your application.
+因为 styled-components 允许使用任意的输入作为插值使用,我们必须谨慎处理输入使其无害.使用用户输入作为样式可能导致用户浏览器中的CSS文件被攻击者替换.
 
-This example shows how bad user input can even lead to API endpoints being called on a user's behalf.
+以下这个例子展示了糟糕的输入导致的 API 被攻击:
 
 ```jsx
 // Oh no! The user has given us a bad URL!
@@ -781,7 +781,6 @@ const ArbitraryComponent = styled.div`
   /* More styles here... */
 `
 ```
+请一定谨慎处理!这虽然是一个明显的例子,但是CSS注入可能隐式的发生并且产生不良影响.有些旧版本的 IE 甚至会在 url 声明中执行 JavaScript.
 
-Be very careful! This is obviously a made-up example, but CSS injection can be unobvious and have bad repercussions. Some IE versions even execute arbitrary JavaScript within url declarations.
-
-There is an upcoming standard to sanitize CSS from JavaScript, CSS.escape. It's not very well supported across browsers yet, so we recommend using the polyfill by Mathias Bynens in your app.
+There is an upcoming standard to sanitize CSS from JavaScript有一个即将推出的标准,可以用于无害化 JavaScript 中的 CSS, [`CSS.escape`](https://developer.mozilla.org/en-US/docs/Web/API/CSS/escape). 这个标准还没有被浏览器很好的支持,因此建议使用 [`polyfill by Mathias Bynens`](https://github.com/mathiasbynens/CSS.escape) .
