@@ -442,3 +442,31 @@ There are many ways to apply contextual overrides to a component's styling. That
 styled-components solves this use case cleanly via the "component selector" pattern. Whenever a component is created or wrapped by the styled() factory function, it is also assigned a stable CSS class for use in targeting. This allows for extremely powerful composition patterns without having to fuss around with naming and avoiding selector collisions.
 
 A practical example: here, our Icon component defines its response to the parent Link being hovered:
+
+
+## 样式对象
+styled-components 支持将 CSS 写成 JavaScript 对象.对于已存在的样式对象,可以很轻松的将其迁移到 styled-components.
+
+
+```jsx
+// Static object
+const Box = styled.div({
+  background: 'palevioletred',
+  height: '50px',
+  width: '50px'
+});
+
+// Adapting based on props
+const PropsBox = styled.div(props => ({
+  background: props.background,
+  height: '50px',
+  width: '50px'
+}));
+
+render(
+  <div>
+    <Box />
+    <PropsBox background="blue" />
+  </div>
+);
+```

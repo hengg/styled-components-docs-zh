@@ -38,7 +38,7 @@
   - [Tagged Template Literals 标记模板字符串](./Advanced.md#标记模板字符串)
   - [Server Side Rendering 服务端渲染(v2+)](./Advanced.md#服务端渲染)
   - Referring to other components
-  - Style Objects
+  - [Style Objects 样式对象](./Advanced.md#样式对象)
 
 - API Reference
   - Primary
