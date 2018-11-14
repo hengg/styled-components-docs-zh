@@ -339,7 +339,7 @@ fn(['this is a ', ' day'], aVar)
 
 ## 服务端渲染(v2+)
 
-styled-components 支持并发服务端渲染, with stylesheet rehydration. 其核心思想是,每当在服务器上渲染应用时, 为 React 树创建一个`ServerStyleSheet` 和一个 `provider` ,通过 context API 来接收样式. 
+styled-components 通过样式注水(with stylesheet rehydration)支持并发服务端渲染. 其核心思想是,每当在服务器上渲染应用时, 为 React 树创建一个`ServerStyleSheet` 和一个 `provider` ,通过 context API 来接收样式. 
 
 这不会影响全局样式,例如 `keyframes` 或者 `createGlobalStyle` ,并且允 styled-components 与 React DOM 的 SSR API 共同使用.
 
@@ -392,3 +392,46 @@ const styleTags = sheet.getStyleTags() // or sheet.getStyleElement();
 参考 [our example](https://github.com/zeit/next.js/tree/master/examples/with-styled-components) 中的 Next.js repo .
 
 ### Streaming Rendering
+
+styled-components 提供一个与[ReactDOMServer.renderToNodeStream()](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)搭配使用的流式 API . 一个流式实现需要以下两部分:
+
+*在服务器上:*
+
+`ReactDOMServer.renderToNodeStream` 发出一个 styled-components 包装过的"可读"流. 当整个 HTML 块被推到流上时,如果任何相应的样式已经可以渲染,一个样式块会被附加到 React HTML 并发送给客户端浏览器.
+
+```jsx
+import { renderToNodeStream } from 'react-dom/server'
+import styled, { ServerStyleSheet } from 'styled-components'
+
+// if you're using express.js, you'd have access to the response object "res"
+
+// typically you'd want to write some preliminary HTML, since React doesn't handle this
+res.write('<html><head><title>Test</title></head><body>')
+
+const Heading = styled.h1`
+  color: red;
+`
+
+const sheet = new ServerStyleSheet()
+const jsx = sheet.collectStyles(<Heading>Hello SSR!</Heading>)
+const stream = sheet.interleaveWithNodeStream(renderToNodeStream(jsx))
+
+// you'd then pipe the stream into the response object until it's done
+stream.pipe(
+  res,
+  { end: false }
+)
+
+// and finalize the response with closing HTML
+stream.on('end', () => res.end('</body></html>'))
+```
+
+*在客户端里:*
+```jsx
+import { hydrate } from 'react-dom'
+
+hydrate()
+// your client-side react implementation
+```
+
+After client-side rehydration is complete, styled-components will take over as usual and inject any further dynamic styles after the relocated streaming ones.

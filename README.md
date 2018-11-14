@@ -29,7 +29,7 @@
   - [Animations 动画](./Basics.md#动画)
   - [React Native](./Basics.md#ReactNative)
 
-- Advanced
+- [Advanced 进阶用法](./Advanced.md)
   - [Theming 主题](./Advanced.md#主题)
   - [Refs](./Advanced.md#Refs)
   - [Security 安全性](./Advanced.md#安全性)
@@ -39,3 +39,12 @@
   - [Server Side Rendering 服务端渲染(v2+)](./Advanced.md#服务端渲染(v2+))
   - Referring to other components
   - Style Objects
+
+-API Reference
+  - Primary
+  - Helpers
+  - Test Utilities
+  - Supported CSS
+  - Flow
+  - TypeScript
+  - Previous APIs
