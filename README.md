@@ -16,9 +16,9 @@
 
 ## 目录
 
-- [Basics 基本用法](./Basics)
-  - [Motivation 动机](./Basics#动机)
-  - Installation
+- [Basics 基本用法](./Basics.md)
+  - [Motivation 动机](./Basics.md#动机)
+  - Installation 
   - Getting Started
   - Adapting based on props
   - Extending styles
@@ -27,4 +27,4 @@
   - Coming from CSS
   - Attaching additional props
   - Animations
-  - [React Native](./Basics#ReactNative)
+  - [React Native](./Basics.md#ReactNative)
