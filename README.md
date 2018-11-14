@@ -18,13 +18,13 @@
 
 - [Basics 基本用法](./Basics)
   - [Motivation 动机](./Basics#动机)
-  - Installation
-  - Getting Started
-  - Adapting based on props
-  - Extending styles
-  - Styling any components
-  - Passed props
-  - Coming from CSS
-  - Attaching additional props
-  - Animations
+  - [Installation 安装](./Basics#安装)
+  - [Getting Started 入门](./Basics#入门)
+  - [Adapting based on props 基于属性的适配](./Basics#基于属性的适配)
+  - [Extending styles 样式继承](./Basics#样式继承)
+  - [Styling any components 为任意组件添加样式](./Basics#给任何组件添加样式) 
+  - [Passed props 属性传递](./Basics#属性传递)
+  - [Coming from CSS](./Basics#ComingfromCSS)
+  - [Attaching additional props 附加额外的属性](./Basics#附加额外的属性)
+  - [Animations 动画](./Basics#动画)
   - [React Native](./Basics#ReactNative)

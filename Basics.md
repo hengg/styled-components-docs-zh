@@ -1,8 +1,7 @@
-[TOC]
 
 # 基础
 
-## 动机<div id="Motivation" />
+## 动机<div id="Motivation"/>
 
 **styled-components 是作者对于如何增强 React 组件中 CSS 表现这个问题的思考结果**
 通过聚焦于单个用例,设法优化了开发者的体验和面向终端用户的输出.
@@ -18,7 +17,9 @@
 - **自动提供前缀:** 按照当前标准写 CSS,其余的交给 styled-components handle 处理.
 
 通过 styled-components 绑定样式到组件,开发者可以在编写熟知的 CSS 同时也获得上述全部的益处.
-## 安装
+
+## 安装<div id="Installation"/>
+
 从 npm 安装 styled-components :
 ```
 npm install --save styled-components
@@ -40,7 +41,7 @@ const Component = window.styled.div`
 >
 >这用使用方式需要页面在 styled-components script 之前引入 [react CDN bundles](https://reactjs.org/docs/cdn-links.html) 
 
-## 入门
+## 入门<div id="GettingStarted"/>
 
 `styled-components` 通过标记的模板字符来设置组件样式.
 
@@ -76,7 +77,7 @@ render(
 >
 > styled-components 会为我们自动创建 CSS 前缀
 
-## 基于 props 的适配
+## 基于属性的适配
 我们可以将 props 以插值的方式传递给`styled component`,以调整组件样式.
 
 下面这个 `Button` 组件持有一个可以改变`color`的`primary`属性. 将其设置为 ture 时,组件的`background-color`和`color`会交换.
@@ -185,7 +186,7 @@ render(
 );
 ```
 
-## 给任何组件添加样式(Styling any components)
+## 给任何组件添加样式
 `styled`方法适用于任何最终向 DOM 元素传递 `className` 属性的组件,当然也包括第三方组件.
 > 注意
 >
@@ -217,7 +218,7 @@ render(
 >
 >也可以传递标签给`styled()`, 比如:` styled("div")`. 实际上`styled.tagname`的方式就是 styled(tagname)`的别名.
 
-## 传递 props
+## 属性传递
 如果添加样式的目标是 DOM 元素 (如`styled.div`), `styled-components `会传递已知的 HTML 属性给 DOM. 如果是一个自定义的 React 组件 (如`styled(MyComponent)`), `styled-components` 会传递全部 `props`.
 
 以下示例展示如何传递 Input 组件的 props 到已装载的 DOM 节点, as with React elements.
@@ -243,7 +244,7 @@ render(
 ```
 
 注意, `inputColor prop`并没有传递给 DOM, 但是`type`和`defaultValue` 都传递了. `styled-components`足够智能,会自动过滤掉所有非标准 attribute.
-
+<div id="ComingfromCSS">
 ## Coming from CSS
 
 ### styled-components 如何在组件中工作?
@@ -528,7 +529,7 @@ const styles = css`
 >
 >This used to work in v3 and below where we didn't code-split keyframes. If you're upgrading from v3, make sure that all your shared style fragments are using the css helper!
 
-## React Native<div id="ReactNative" />
+## ReactNative
 `styled-components` 可以在 React-Native 中以同样的方式使用. 示例:[ Snack by Expo](https://snack.expo.io/@danielmschmidt/styled-components).
 ```jsx
 import React from 'react'
