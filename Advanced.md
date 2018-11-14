@@ -230,7 +230,7 @@ const MyComponent = styled.div`background-color: green;`;
 // even though you're trying to override it with the "red-bg" class!
 <MyComponent className="red-bg" />
 ```
-上述例子中`styled-components`类的样式覆盖了全局类,因为`styled-components`在运行时向`<head>`末尾注入样式.
+上述例子中`styled-components`类的样式覆盖了全局类,因为`styled-components`在运行时向`<head>`末尾注入样式.
 
 一种解决方式是提高全局样式的优先级:
 ```jsx
@@ -333,7 +333,7 @@ const aVar = 'good'
 fn`this is a ${aVar} day`
 fn(['this is a ', ' day'], aVar)
 ```
-这用起来有点笨重,但是这意味着我们可以在 styled components 中接收变量,函数或是 mixins ,并且可以将它们转换成纯 CSS.
+这用起来有点笨重,但是这意味着我们可以在 styled components 中接收变量,函数或是 mixins ,并且可以将它们转换成纯 CSS.
 
 想了解有关标记模板字符串的更多信息, 请参阅 Max Stoiber 的文章: [The magic behind 💅 styled-components](https://mxstbr.blog/2016/11/styled-components-magic-explained/)
 
@@ -362,7 +362,7 @@ const html = renderToString(sheet.collectStyles(<YourApp />))
 const styleTags = sheet.getStyleTags() // or sheet.getStyleElement();
 ```
 
-`collectStyles` 方法将元素包装进了 provider.也可以选择直接使用 `StyleSheetManager` provider.确保不要再客户端使用即可.
+`collectStyles` 方法将元素包装进了 provider.也可以选择直接使用 `StyleSheetManager` provider.确保不要再客户端使用即可.
 
 ```jsx
 import { renderToString } from 'react-dom/server'
@@ -433,14 +433,14 @@ import { hydrate } from 'react-dom'
 hydrate()
 // your client-side react implementation
 ```
-当客户端注水完毕后, styled-components 将接管重新定位后的流式样式并且注入动态样式.
+当客户端注水完毕后, styled-components 将接管重新定位后的流式样式并且注入动态样式.
 
 
 ## Referring to other components
 有许多方法可以实现覆盖组件样式.话虽如此,很难在不使用广为人知的CSS选择器范式的情况下让使用插值变得轻松.
 
-styled-components 通过"component selector"干净利落的解决了这个问题. 
-当一个组件由`styled()`工厂方法创建或是被其包装后,同时也会被分配一个 stable CSS 类用于定位.这实现了非常强力的组合模式而无需在命名和避免选择器冲突上手忙脚乱.
+styled-components 通过"component selector"干净利落的解决了这个问题. 
+当一个组件由`styled()`工厂方法创建或是被其包装后,同时也会被分配一个 stable CSS 类用于定位.这实现了非常强力的组合模式而无需在命名和避免选择器冲突上手忙脚乱.
 
 如下例子实现了 Icon 组件对它父组件 Link hover 的响应:
 ```jsx
@@ -521,7 +521,7 @@ const B = styled.div`
 ```
 
 ## 样式对象
-styled-components 支持将 CSS 写成 JavaScript 对象.对于已存在的样式对象,可以很轻松的将其迁移到 styled-components.
+styled-components 支持将 CSS 写成 JavaScript 对象.对于已存在的样式对象,可以很轻松的将其迁移到 styled-components.
 
 
 ```jsx
