@@ -1,6 +1,3 @@
-
-
-
 # 高级
 
 ## 主题
@@ -262,7 +259,7 @@ styled.button`
 
 一个罕见的问题是同一页面上两个`styled-components`实例的冲突.通过在 code bundle 中定义 `process.env.SC_ATTR` 可以避免这个问题. 它将覆盖 `<style> `标签的`data-styled`属性,  (v3 及以下版本使用 `data-styled-components`), allowing each styled-components instance to recognize its own tags.
 
-## Media Templates
+## 媒体模板
 开发响应式 web app 时媒体查询是不可或缺的工具.
 
 以下是一个非常简单的示例,展示了当屏宽小于700px时,组件如何改变背景色:
@@ -318,7 +315,7 @@ render(
 );
 ```
 
-## 标记模板字符串 tagged template literal
+## 标记模板字符串
 模板字符串是 ES6 的新功能.它允许我们自定义字符串插值规则--styled components 正是基于此功能实现.
 
 如果没有传递插值,则函数接收的一个参数是包含一个字符串的数组:
@@ -340,13 +337,13 @@ fn(['this is a ', ' day'], aVar)
 
 想了解有关标记模板字符串的更多信息, 请参阅 Max Stoiber 的文章: [The magic behind 💅 styled-components](https://mxstbr.blog/2016/11/styled-components-magic-explained/)
 
-## 服务端渲染 SSR v2+
+## 服务端渲染(v2+)
 
 styled-components 支持并发服务端渲染, with stylesheet rehydration. 其核心思想是,每当在服务器上渲染应用时, 为 React 树创建一个`ServerStyleSheet` 和一个 `provider` ,通过 context API 来接收样式. 
 
 这不会影响全局样式,例如 `keyframes` 或者 `createGlobalStyle` ,并且允 styled-components 与 React DOM 的 SSR API 共同使用.
 
-### Tooling setup
+### 设置
 为了可靠的执行 SSR,正确的生成客户端 bundle,请使用 [babel plugin](https://www.styled-components.com/docs/tooling#babel-plugin). 
 它通过为每个 styled component 添加确定的 ID 来防止校验错误. 更多信息请参考 [tooling documentation](https://www.styled-components.com/docs/tooling#serverside-rendering) .
 
@@ -354,7 +351,7 @@ styled-components 支持并发服务端渲染, with stylesheet rehydration. 其�
 
 If possible, we definitely recommend using the babel plugin though because it is updated the most frequently. It's now possible to [compile TypeScript using Babel](https://babeljs.io/docs/en/babel-preset-typescript), so it may be worth switching off TS loader and onto a pure Babel implementation to reap the ecosystem benefits.
 
-## 示例
+### 示例
 基本 API 的使用如下:
 ```js
 import { renderToString } from 'react-dom/server'

@@ -244,7 +244,9 @@ render(
 ```
 
 注意, `inputColor prop`并没有传递给 DOM, 但是`type`和`defaultValue` 都传递了. `styled-components`足够智能,会自动过滤掉所有非标准 attribute.
+
 <div id="ComingfromCSS">
+
 ## Coming from CSS
 
 ### styled-components 如何在组件中工作?
