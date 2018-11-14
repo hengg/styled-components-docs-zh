@@ -16,6 +16,7 @@
 
 ## 目录
 
+<<<<<<< HEAD
 - [Basics 基本用法](./Basics)
   - [Motivation 动机](./Basics#动机)
   - [Installation 安装](./Basics#安装)
@@ -28,3 +29,17 @@
   - [Attaching additional props 附加额外的属性](./Basics#附加额外的属性)
   - [Animations 动画](./Basics#动画)
   - [React Native](./Basics#ReactNative)
+=======
+- [Basics 基本用法](./Basics.md)
+  - [Motivation 动机](./Basics.md#动机)
+  - Installation 
+  - Getting Started
+  - Adapting based on props
+  - Extending styles
+  - Styling any components
+  - Passed props
+  - Coming from CSS
+  - Attaching additional props
+  - Animations
+  - [React Native](./Basics.md#ReactNative)
+>>>>>>> 9bc3b53c3a6ea205330433f930ea36e7eb247a0a
