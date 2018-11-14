@@ -437,12 +437,88 @@ hydrate()
 
 
 ## Referring to other components
-There are many ways to apply contextual overrides to a component's styling. That being said, it rarely is easy without rigging up a well-known targeting CSS selector paradigm and then making them accessible for use in interpolations.
+有许多方法可以实现覆盖组件样式.话虽如此,很难在不使用广为人知的CSS选择器范式的情况下让使用插值变得轻松.
 
-styled-components solves this use case cleanly via the "component selector" pattern. Whenever a component is created or wrapped by the styled() factory function, it is also assigned a stable CSS class for use in targeting. This allows for extremely powerful composition patterns without having to fuss around with naming and avoiding selector collisions.
+styled-components 通过"component selector"干净利落的解决了这个问题. 
+当一个组件由`styled()`工厂方法创建或是被其包装后,同时也会被分配一个 stable CSS 类用于定位.这实现了非常强力的组合模式而无需在命名和避免选择器冲突上手忙脚乱.
 
-A practical example: here, our Icon component defines its response to the parent Link being hovered:
+如下例子实现了 Icon 组件对它父组件 Link hover 的响应:
+```jsx
+const Link = styled.a`
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  background: papayawhip;
+  color: palevioletred;
+`;
 
+const Icon = styled.svg`
+  flex: none;
+  transition: fill 0.25s;
+  width: 48px;
+  height: 48px;
+
+  ${Link}:hover & {
+    fill: rebeccapurple;
+  }
+`;
+
+const Label = styled.span`
+  display: flex;
+  align-items: center;
+  line-height: 1.2;
+
+  &::before {
+    content: '◀';
+    margin: 0 10px;
+  }
+`;
+
+render(
+  <Link href="#">
+    <Icon viewBox="0 0 20 20">
+      <path d="M10 15h8c1 0 2-1 2-2V3c0-1-1-2-2-2H2C1 1 0 2 0 3v10c0 1 1 2 2 2h4v4l4-4zM5 7h2v2H5V7zm4 0h2v2H9V7zm4 0h2v2h-2V7z"/>
+    </Icon>
+    <Label>Hovering my parent changes my style!</Label>
+  </Link>
+);
+```
+可以在 Link 组件内嵌套样式`color-changing`, 但是这样就必须要同时考虑这两套规则来理解 Icon 组件的行为.
+
+### Caveat
+This behaviour is only supported within the context of *Styled* Components: attempting to mount B in the following example will fail because component A is an instance of React.Component not a Styled Component.
+
+```jsx
+class A extends React.Component {
+  render() {
+    return <div />
+  }
+}
+
+const B = styled.div`
+  ${A} {
+  }
+`
+```
+
+The error thrown - `Cannot call a class as a function` - occurs because the styled component is attempting to call the component as an interpolation function.
+
+However, wrapping `A` in a styled() factory makes it eligible for interpolation -- just make sure the wrapped component passes along `className`.
+
+```jsx
+class A extends React.Component {
+  render() {
+    return <div className={this.props.className} />
+  }
+}
+
+const StyledA = styled(A)``
+
+const B = styled.div`
+  ${StyledA} {
+  }
+`
+```
 
 ## 样式对象
 styled-components 支持将 CSS 写成 JavaScript 对象.对于已存在的样式对象,可以很轻松的将其迁移到 styled-components.
