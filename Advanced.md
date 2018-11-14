@@ -397,7 +397,7 @@ styled-components 提供一个与[ReactDOMServer.renderToNodeStream()](https://r
 
 *在服务器上:*
 
-`ReactDOMServer.renderToNodeStream` 发出一个 styled-components 包装过的"可读"流. 当整个 HTML 块被推到流上时,如果任何相应的样式已经可以渲染,一个样式块会被附加到 React HTML 并发送给客户端浏览器.
+`ReactDOMServer.renderToNodeStream` 发出一个 styled-components 包装过的"可读"流. 当整个 HTML 块被推到流上时,如果任何相应的样式已经可以渲染,一个样式块会被附加到 React HTML 并发送给客户端浏览器.
 
 ```jsx
 import { renderToNodeStream } from 'react-dom/server'
