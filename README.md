@@ -635,9 +635,9 @@ render(
 ```
 
 ### 函数主题
-theme prop 也可以传递一个函数.该函数接收渲染树上级`<ThemeProvider>`所传递的主题. 通过这种方式可以使 themes 形成上下文.
+theme prop 也可以传递一个函数.该函数接收渲染树上级`<ThemeProvider>`所传递的主题. 通过这种方式可以使 themes 形成上下文.
 
-下面的示例说明了如何通过第二个`<ThemeProvider>`来交换 `background`和`foreground`的颜色. 函数`invertTheme` 接收上级 theme 后创建一个新的 theme.
+下面的示例说明了如何通过第二个`<ThemeProvider>`来交换 `background`和`foreground`的颜色. 函数`invertTheme` 接收上级 theme 后创建一个新的 theme.
 
 ```jsx
 // Define our button, but with the use of props.theme this time
@@ -783,7 +783,7 @@ const ArbitraryComponent = styled.div`
 ```
 请一定谨慎处理!这虽然是一个明显的例子,但是CSS注入可能隐式的发生并且产生不良影响.有些旧版本的 IE 甚至会在 url 声明中执行 JavaScript.
 
-There is an upcoming standard to sanitize CSS from JavaScript有一个即将推出的标准,可以用于无害化 JavaScript 中的 CSS, [`CSS.escape`](https://developer.mozilla.org/en-US/docs/Web/API/CSS/escape). 这个标准还没有被浏览器很好的支持,因此建议使用 [`polyfill by Mathias Bynens`](https://github.com/mathiasbynens/CSS.escape) .
+There is an upcoming standard to sanitize CSS from JavaScript有一个即将推出的标准,可以用于无害化 JavaScript 中的 CSS, [`CSS.escape`](https://developer.mozilla.org/en-US/docs/Web/API/CSS/escape). 这个标准还没有被浏览器很好的支持,因此建议使用 [`polyfill by Mathias Bynens`](https://github.com/mathiasbynens/CSS.escape) .
 
 ## Existing CSS
 如果想将 styled-components 和现有的 CSS 共同使用,有很多实现的细节必须注意到.
@@ -800,7 +800,7 @@ class MyComponent extends React.Component {
   }
 }
 ```
-对于已存在类名的组件,可以将其余传入的类合并:
+对于已存在类名的组件,可以将其余传入的类合并:
 ```jsx
 class MyComponent extends React.Component {
   render() {
@@ -836,9 +836,9 @@ const MyComponent = styled.div`background-color: green;`;
 ```
 
 ### 避免与第三方样式和脚本的冲突
-如果在一个不能完全控制的页面上部署`styled-components`,可能需要采取措施确保 component styles 不与 host page 上其他样式冲突.
+如果在一个不能完全控制的页面上部署`styled-components`,可能需要采取措施确保 component styles 不与 host page 上其他样式冲突.
 
-常见的问题是优先级相同,例如 host page 上持有如下样式:
+常见的问题是优先级相同,例如 host page 上持有如下样式:
 ```jsx
 body.my-body button {
   padding: 24px;
@@ -850,14 +850,14 @@ styled.button`
   padding: 16px;
 `
 ```
-没有让 styled component 完全不受 host page 样式影响的办法.但是可以通过[`babel-plugin-styled-components-css-namespace`](https://github.com/QuickBase/babel-plugin-styled-components-css-namespace)来提高样式的优先级, 通过它可以为 styled components 的类指定一个命名空间. 一个好的命名空间,譬如`#my-widget`,可以实现styled-components 在 一个 `id="my-widget"`的容器中渲染, 因为 id 选择器的优先级总是高于类选择器.
+没有让 styled component 完全不受 host page 样式影响的办法.但是可以通过[`babel-plugin-styled-components-css-namespace`](https://github.com/QuickBase/babel-plugin-styled-components-css-namespace)来提高样式的优先级, 通过它可以为 styled components 的类指定一个命名空间. 一个好的命名空间,譬如`#my-widget`,可以实现styled-components 在 一个 `id="my-widget"`的容器中渲染, 因为 id 选择器的优先级总是高于类选择器.
 
 一个罕见的问题是同一页面上两个`styled-components`实例的冲突.通过在 code bundle 中定义 `process.env.SC_ATTR` 可以避免这个问题. 它将覆盖 `<style> `标签的`data-styled`属性,  (v3 及以下版本使用 `data-styled-components`), allowing each styled-components instance to recognize its own tags.
 
 ## Media Templates
 开发响应式 web app 时媒体查询是不可或缺的工具.
 
-以下是一个非常简单的示例,展示了当屏宽小于700px时,组件如何改变背景色:
+以下是一个非常简单的示例,展示了当屏宽小于700px时,组件如何改变背景色:
 ```jsx
 const Content = styled.div`
   background: papayawhip;
@@ -875,7 +875,7 @@ render(
 ```
 由于媒体查询很长,并且常常在应用中重复出现,因此有必要为其创建模板.
 
-由于 JavaScript 的函数式特性,我们可以轻松的定义自己的标记模板字符串用于包装媒体查询中的样式.我们重写一下上个例子来试试:
+由于 JavaScript 的函数式特性,我们可以轻松的定义自己的标记模板字符串用于包装媒体查询中的样式.我们重写一下上个例子来试试:
 ```jsx
 const sizes = {
   desktop: 992,
@@ -911,7 +911,7 @@ render(
 ```
 
 ## 标记模板字符串 tagged template literal
-模板字符串是 ES6 的新功能.它允许我们自定义字符串插值规则--styled components 正是基于此功能实现.
+模板字符串是 ES6 的新功能.它允许我们自定义字符串插值规则--styled components 正是基于此功能实现.
 
 如果没有传递插值,则函数接收的一个参数是包含一个字符串的数组:
 ```jsx
@@ -934,13 +934,13 @@ fn(['this is a ', ' day'], aVar)
 
 ## 服务端渲染 SSR v2+
 
-styled-components 支持并发服务端渲染, with stylesheet rehydration. 其核心思想是,每当在服务器上渲染应用时, 为 React 树创建一个`ServerStyleSheet` 和一个 `provider` ,通过 context API 来接收样式. 
+styled-components 支持并发服务端渲染, with stylesheet rehydration. 其核心思想是,每当在服务器上渲染应用时, 为 React 树创建一个`ServerStyleSheet` 和一个 `provider` ,通过 context API 来接收样式. 
 
 这不会影响全局样式,例如 `keyframes` 或者 `createGlobalStyle` ,并且允 styled-components 与 React DOM 的 SSR API 共同使用.
 
 ### Tooling setup
 为了可靠的执行 SSR,正确的生成客户端 bundle,请使用 [babel plugin](https://www.styled-components.com/docs/tooling#babel-plugin). 
-它通过为每个 styled component 添加确定的 ID 来防止校验错误. 更多信息请参考 [tooling documentation](https://www.styled-components.com/docs/tooling#serverside-rendering) .
+它通过为每个 styled component 添加确定的 ID 来防止校验错误. 更多信息请参考 [tooling documentation](https://www.styled-components.com/docs/tooling#serverside-rendering) .
 
 对于 TypeScript 用户, TS 大师 Igor Oleinikov 整合了webpack ts-loader / awesome-typescript-loader 工具链 [TypeScript plugin](https://www.styled-components.com/docs/tooling#typescript-plugin)  来完成类似的任务.
 
@@ -973,7 +973,7 @@ const html = renderToString(
 const styleTags = sheet.getStyleTags() // or sheet.getStyleElement();
 ```
 
-`sheet.getStyleTags()` 方法返回多个字符串的 `<style>` 标签. 当向 HTML 输出增加 CSS 时需要考虑这一点.
+`sheet.getStyleTags()` 方法返回多个字符串的 `<style>` 标签. 当向 HTML 输出增加 CSS 时需要考虑这一点.
 
 作为另一种选择,` ServerStyleSheet` 实例也提供 `getStyleElement()` 方法,返回一个 React 元素的数组.
 
