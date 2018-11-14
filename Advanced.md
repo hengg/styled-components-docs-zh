@@ -433,5 +433,12 @@ import { hydrate } from 'react-dom'
 hydrate()
 // your client-side react implementation
 ```
+当客户端注水完毕后, styled-components 将接管重新定位后的流式样式并且注入动态样式.
 
-After client-side rehydration is complete, styled-components will take over as usual and inject any further dynamic styles after the relocated streaming ones.
+
+## Referring to other components
+There are many ways to apply contextual overrides to a component's styling. That being said, it rarely is easy without rigging up a well-known targeting CSS selector paradigm and then making them accessible for use in interpolations.
+
+styled-components solves this use case cleanly via the "component selector" pattern. Whenever a component is created or wrapped by the styled() factory function, it is also assigned a stable CSS class for use in targeting. This allows for extremely powerful composition patterns without having to fuss around with naming and avoiding selector collisions.
+
+A practical example: here, our Icon component defines its response to the parent Link being hovered:
