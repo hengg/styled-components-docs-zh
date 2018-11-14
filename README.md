@@ -932,4 +932,58 @@ fn(['this is a ', ' day'], aVar)
 
 想了解有关标记模板字符串的更多信息, 请参阅 Max Stoiber 的文章: [The magic behind 💅 styled-components](https://mxstbr.blog/2016/11/styled-components-magic-explained/)
 
-## Server Side Rendering v2+
+## 服务端渲染 SSR v2+
+
+styled-components 支持并发服务端渲染, with stylesheet rehydration. 其核心思想是,每当在服务器上渲染应用时, 为 React 树创建一个`ServerStyleSheet` 和一个 `provider` ,通过 context API 来接收样式. 
+
+这不会影响全局样式,例如 `keyframes` 或者 `createGlobalStyle` ,并且允 styled-components 与 React DOM 的 SSR API 共同使用.
+
+### Tooling setup
+为了可靠的执行 SSR,正确的生成客户端 bundle,请使用 [babel plugin](https://www.styled-components.com/docs/tooling#babel-plugin). 
+它通过为每个 styled component 添加确定的 ID 来防止校验错误. 更多信息请参考 [tooling documentation](https://www.styled-components.com/docs/tooling#serverside-rendering) .
+
+对于 TypeScript 用户, TS 大师 Igor Oleinikov 整合了webpack ts-loader / awesome-typescript-loader 工具链 [TypeScript plugin](https://www.styled-components.com/docs/tooling#typescript-plugin)  来完成类似的任务.
+
+If possible, we definitely recommend using the babel plugin though because it is updated the most frequently. It's now possible to [compile TypeScript using Babel](https://babeljs.io/docs/en/babel-preset-typescript), so it may be worth switching off TS loader and onto a pure Babel implementation to reap the ecosystem benefits.
+
+## 示例
+基本 API 的使用如下:
+```js
+import { renderToString } from 'react-dom/server'
+import { ServerStyleSheet } from 'styled-components'
+
+const sheet = new ServerStyleSheet()
+const html = renderToString(sheet.collectStyles(<YourApp />))
+const styleTags = sheet.getStyleTags() // or sheet.getStyleElement();
+```
+
+`collectStyles` 方法将元素包装进了 provider.也可以选择直接使用 `StyleSheetManager` provider.确保不要再客户端使用即可.
+
+```jsx
+import { renderToString } from 'react-dom/server'
+import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
+
+const sheet = new ServerStyleSheet()
+const html = renderToString(
+  <StyleSheetManager sheet={sheet.instance}>
+    <YourApp />
+  </StyleSheetManager>
+)
+
+const styleTags = sheet.getStyleTags() // or sheet.getStyleElement();
+```
+
+`sheet.getStyleTags()` 方法返回多个字符串的 `<style>` 标签. 当向 HTML 输出增加 CSS 时需要考虑这一点.
+
+作为另一种选择,` ServerStyleSheet` 实例也提供 `getStyleElement()` 方法,返回一个 React 元素的数组.
+
+>注意
+>
+>`sheet.getStyleTags()` 和`sheet.getStyleElement()` 只能在元素渲染和调用. 所以`sheet.getStyleElement()`中的组件不能与`<YourApp /> `合并为一个更大的组件.
+
+### Next.js
+首先添加一个自定义的 ` pages/_document.js `. 然后 [复制这段逻辑](https://github.com/zeit/next.js/blob/master/examples/with-styled-components/pages/_document.js) 将服务端你渲染的样式注入 `<head>`.
+
+参考 [our example](https://github.com/zeit/next.js/tree/master/examples/with-styled-components) 中的 Next.js repo .
+
+### Streaming Rendering
