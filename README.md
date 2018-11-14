@@ -36,11 +36,11 @@
   - [Existing CSS](./Advanced.md#ExistingCSS)
   - [Media Templates 媒体模板](./Advanced.md#媒体模板)
   - [Tagged Template Literals 标记模板字符串](./Advanced.md#标记模板字符串)
-  - [Server Side Rendering 服务端渲染(v2+)](./Advanced.md#服务端渲染(v2+))
+  - [Server Side Rendering 服务端渲染(v2+)](./Advanced.md#服务端渲染)
   - Referring to other components
   - Style Objects
 
--API Reference
+- API Reference
   - Primary
   - Helpers
   - Test Utilities

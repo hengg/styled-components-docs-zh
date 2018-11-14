@@ -337,7 +337,7 @@ fn(['this is a ', ' day'], aVar)
 
 想了解有关标记模板字符串的更多信息, 请参阅 Max Stoiber 的文章: [The magic behind 💅 styled-components](https://mxstbr.blog/2016/11/styled-components-magic-explained/)
 
-## 服务端渲染(v2+)
+## 服务端渲染
 
 styled-components 通过样式注水(with stylesheet rehydration)支持并发服务端渲染. 其核心思想是,每当在服务器上渲染应用时, 为 React 树创建一个`ServerStyleSheet` 和一个 `provider` ,通过 context API 来接收样式. 
 
