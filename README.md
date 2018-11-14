@@ -855,6 +855,81 @@ styled.button`
 一个罕见的问题是同一页面上两个`styled-components`实例的冲突.通过在 code bundle 中定义 `process.env.SC_ATTR` 可以避免这个问题. 它将覆盖 `<style> `标签的`data-styled`属性,  (v3 及以下版本使用 `data-styled-components`), allowing each styled-components instance to recognize its own tags.
 
 ## Media Templates
-Media queries are an indispensable tool when developing responsive web apps.
+开发响应式 web app 时媒体查询是不可或缺的工具.
 
-This is a very simple example. It shows a basic component changing its background color, once the screen's width drops below a threshold of 700px.
+以下是一个非常简单的示例,展示了当屏宽小于700px时,组件如何改变背景色:
+```jsx
+const Content = styled.div`
+  background: papayawhip;
+  height: 3em;
+  width: 3em;
+
+  @media (max-width: 700px) {
+    background: palevioletred;
+  }
+`;
+
+render(
+  <Content />
+);
+```
+由于媒体查询很长,并且常常在应用中重复出现,因此有必要为其创建模板.
+
+由于 JavaScript 的函数式特性,我们可以轻松的定义自己的标记模板字符串用于包装媒体查询中的样式.我们重写一下上个例子来试试:
+```jsx
+const sizes = {
+  desktop: 992,
+  tablet: 768,
+  phone: 576,
+}
+
+// Iterate through the sizes and create a media template
+const media = Object.keys(sizes).reduce((acc, label) => {
+  acc[label] = (...args) => css`
+    @media (max-width: ${sizes[label] / 16}em) {
+      ${css(...args)}
+    }
+  `
+
+  return acc
+}, {})
+
+const Content = styled.div`
+  height: 3em;
+  width: 3em;
+  background: papayawhip;
+
+  /* Now we have our methods on media and can use them instead of raw queries */
+  ${media.desktop`background: dodgerblue;`}
+  ${media.tablet`background: mediumseagreen;`}
+  ${media.phone`background: palevioletred;`}
+`;
+
+render(
+  <Content />
+);
+```
+
+## 标记模板字符串 tagged template literal
+模板字符串是 ES6 的新功能.它允许我们自定义字符串插值规则--styled components 正是基于此功能实现.
+
+如果没有传递插值,则函数接收的一个参数是包含一个字符串的数组:
+```jsx
+// These are equivalent:
+fn`some string here`
+fn(['some string here'])
+```
+如果传递了插值,则数组中包含了传递的字符串, split at the positions of the interpolations.其余参数将按顺序进行插值.
+
+```jsx
+const aVar = 'good'
+
+// These are equivalent:
+fn`this is a ${aVar} day`
+fn(['this is a ', ' day'], aVar)
+```
+这用起来有点笨重,但是这意味着我们可以在 styled components 中接收变量,函数或是 mixins ,并且可以将它们转换成纯 CSS.
+
+想了解有关标记模板字符串的更多信息, 请参阅 Max Stoiber 的文章: [The magic behind 💅 styled-components](https://mxstbr.blog/2016/11/styled-components-magic-explained/)
+
+## Server Side Rendering v2+
